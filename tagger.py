@@ -7,8 +7,18 @@
 #  tags for each word. Output -> use model to POS tag a test file
 # 
 
-def train_model():
-    pass
+import re
+# Extract POS tags into a dictionary
+# IN: corpus; a contiguous string of POS-tagged text
+# OUT: stochastic_model; a dictionary containing each word and its most 
+#       often occuring part of speech
+def train_model(corpus):
+    stochastic_model = dict()
+    # Word / Part of speech
+    tagger_pair_pattern = r"([\w]+)/([\w]+)"
+    # Split corpus along backslashes
+
+
 
 def apply_tags():
     pass
