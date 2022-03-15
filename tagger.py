@@ -8,20 +8,19 @@
 # Output: use model to POS tag a test file
 #
 
-import re
-import scorer
 # Extract POS tags into a dictionary
 # IN: corpus; a contiguous string of POS-tagged text
 # OUT: stochastic_model; a dictionary containing each word and its most
 #       often occuring part of speech
 
+import re
 
 def train_model(corpus):
     tag_list = []
     tag_set = dict(tag_list)
     stochastic_model = dict()
     # Word / Part of speech
-    tagger_pair_pattern = r"([\w]+)/([\w]+)"
+    tagger_pair_pattern = r"([\w]+)/([\w]+|?)"
     # Split corpus along backslashes
     pair_matches = re.findall(tagger_pair_pattern, corpus)
 
@@ -34,8 +33,9 @@ def train_model(corpus):
     # For each word, select the most common tag and insert into model
     for word in tag_set:
         current_set = tag_set[word]
-        chosen_tag = max(set(current_set), key=current_set.count)
+        chosen_tag = max(current_set, key=current_set.count)
         stochastic_model[word] = chosen_tag
+        
     return stochastic_model
 
 # Use generated stochastic model to apply part of speech tags
@@ -51,11 +51,23 @@ def apply_tags(raw_text: str, s_model: dict):
     for word in raw_text:
         if word in s_model:
             current_tag = s_model[word].value()
-            
+            pass
 
 
 if __name__ == '__main__':
     import sys
-    training_file = ""
-    test_file = ""
-    file_with_tags = ""
+    
+    training_file_name = str(sys.argv[1])
+    test_file_name = str(sys.argv[2])
+    
+    training_corpus = ""
+    
+    test_file_id = test_file_name - ".txt"
+    tagged_file = test_file_id + "-tagged.txt"
+    
+    with open(training_file_name) as file:
+        training_corpus = file.read()
+        
+    
+    
+    
