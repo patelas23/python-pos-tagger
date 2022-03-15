@@ -57,17 +57,25 @@ def apply_tags(raw_text: str, s_model: dict):
 if __name__ == '__main__':
     import sys
     
+    # File I/O
+    # # Assuming each argument is separated by whitespace
     training_file_name = str(sys.argv[1])
     test_file_name = str(sys.argv[2])
     
     training_corpus = ""
     
-    test_file_id = test_file_name - ".txt"
-    tagged_file = test_file_id + "-tagged.txt"
+    sys.stdout.write("hello there")
     
-    with open(training_file_name) as file:
-        training_corpus = file.read()
+    # test_file_id = re.sub(pattern=r".txt", repl="", string=test_file_name)
+    # tagged_file = test_file_id + "-tagged.txt"
+    
+    # with open(training_file_name) as file:
+        # training_corpus = file.read()
         
+    # Create part of speech model
+
+    # Execute analysis on supplied text
+    # training_data = train_model(training_corpus)
     
     
     
