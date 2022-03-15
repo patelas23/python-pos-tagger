@@ -14,22 +14,25 @@
 #       often occuring part of speech
 
 import re
+import sys
 
-def train_model(corpus):
+def train_model(corpus: str):
     tag_list = []
     tag_set = dict(tag_list)
     stochastic_model = dict()
     # Word / Part of speech
-    tagger_pair_pattern = r"([\w]+)/([\w]+|?)"
+    tagger_pair_pattern = r"([\S]+)/([\S]+)"
     # Split corpus along backslashes
     pair_matches = re.findall(tagger_pair_pattern, corpus)
+    print(corpus)
+    
 
     # Create list of all tags associated with each word
     for current_word, current_tag in pair_matches:
         if current_word in tag_set:
             tag_set[current_word].append(current_tag)
         else:
-            tag_set[current_word] = []
+            tag_set[current_word] = [current_tag]
     # For each word, select the most common tag and insert into model
     for word in tag_set:
         current_set = tag_set[word]
@@ -50,32 +53,31 @@ def apply_tags(raw_text: str, s_model: dict):
     
     for word in raw_text:
         if word in s_model:
-            current_tag = s_model[word].value()
-            pass
+            current_tag = s_model[word]
+            sys.stdout.write(word + "/" + current_tag)
+            
 
 
 if __name__ == '__main__':
-    import sys
     
     # File I/O
-    # # Assuming each argument is separated by whitespace
     training_file_name = str(sys.argv[1])
     test_file_name = str(sys.argv[2])
     
     training_corpus = ""
-    
-    sys.stdout.write("hello there")
-    
-    # test_file_id = re.sub(pattern=r".txt", repl="", string=test_file_name)
-    # tagged_file = test_file_id + "-tagged.txt"
-    
-    # with open(training_file_name) as file:
-        # training_corpus = file.read()
+    with open(training_file_name) as file:
+        training_corpus = file.read()
+        
+    test_corpus = ""
+    with open(test_file_name) as file:
+        test_corpus = file.read()
         
     # Create part of speech model
-
+    tagger_model = train_model(training_corpus)
     # Execute analysis on supplied text
-    # training_data = train_model(training_corpus)
+    
+    
+    apply_tags(test_corpus, tagger_model)
     
     
     
