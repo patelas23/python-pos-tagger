@@ -9,18 +9,22 @@
 #   confusion_mat: 2d matrix containing
 #       rows (actual): sequence of tags from gold standard
 #       cols(predicted): sequence of tagger.py tags
-# 
+#
+import pandas as pd 
+from sklearn import metrics
 import sys
 
-
-def score_pos_tags(tag_out, g_std):
-    # Extract word/tag pairs from each corpus
-    
-    # Compare each sequence of tags to find deviation from standard
-    # Store each new word and it's pos
-    # Store each guessed word and it's pos
-    # zip together both lists into a 2d array
+def parse_text(corpus):
     pass
+
+def score_pos_tags(predicted: list, actual: list):
+    # Cast each list as a pandas series for analysis
+    predicted_series = pd.Series(predicted, name='Predicted')
+    actual_series = pd.Series(actual, name="Actual")
+    # zip together both lists into a 2d array
+    confusion_mat = metrics.confusion_matrix(actual_series, predicted_series)
+    sys.stdout.write(pd.crosstab(actual_series, predicted_series))
+    sys.stdout.write("Accuracy score: " + metrics.accuracy_score(actual_series, predicted_series))
 
 if __name__ == '__main__':
     
