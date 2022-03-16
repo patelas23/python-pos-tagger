@@ -3,10 +3,8 @@
 # Python program to tag parts of speech after
 #   constructing a "most likely tag" model based
 #   on supplied training data.
-# Inputs a POS-tagged file, recording the most likely
-#  tags for each word. 
-# Output: use model to POS tag a test file
-#
+# 
+# 
 
 # Extract POS tags into a dictionary
 # IN: corpus; a contiguous string of POS-tagged text
@@ -60,6 +58,8 @@ def apply_tags(raw_text: str, s_model: dict):
         if word in s_model:
             current_tag = s_model[word]
             sys.stdout.write(word + "/" + current_tag + "\n")
+        else:
+            sys.stdout.write(word + "/NN" + "\n")
             
 
 if __name__ == '__main__':
@@ -80,6 +80,4 @@ if __name__ == '__main__':
     tagger_model = train_model(training_corpus)
     # Execute analysis on supplied text
     apply_tags(test_corpus, tagger_model)
-    
-    
     
